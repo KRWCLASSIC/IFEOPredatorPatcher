@@ -32,18 +32,24 @@ mkdir "%PLUGINS_DIR%" 2>nul
 set "BIN_PATCHER=%~dp0src\IFEOPredatorPatcher\bin\Release\net48"
 set "BIN_PLUGIN=%~dp0src\Plugins\OpenPredatorPlugin\bin\Release\net48"
 
-copy /y "%BIN_PATCHER%\IFEOPredatorPatcher.exe" "%PACKAGE_DIR%\" >nul
-copy /y "%BIN_PATCHER%\Mono.Cecil.dll" "%PACKAGE_DIR%\" >nul
-copy /y "%BIN_PATCHER%\Mono.Cecil.Pdb.dll" "%PACKAGE_DIR%\" >nul
-copy /y "%BIN_PATCHER%\Mono.Cecil.Mdb.dll" "%PACKAGE_DIR%\" >nul
-copy /y "%BIN_PATCHER%\Mono.Cecil.Rocks.dll" "%PACKAGE_DIR%\" >nul
+if exist "%BIN_PATCHER%\win-x86\IFEOPredatorPatcher.exe" (
+    copy /y "%BIN_PATCHER%\win-x86\IFEOPredatorPatcher.exe" "%PACKAGE_DIR%\" >nul
+    copy /y "%BIN_PATCHER%\win-x86\Mono.Cecil*.dll" "%PACKAGE_DIR%\" >nul
+) else (
+    copy /y "%BIN_PATCHER%\IFEOPredatorPatcher.exe" "%PACKAGE_DIR%\" >nul
+    copy /y "%BIN_PATCHER%\Mono.Cecil*.dll" "%PACKAGE_DIR%\" >nul
+)
 
 if exist "%~dp0README.md" (
     copy /y "%~dp0README.md" "%PACKAGE_DIR%\" >nul
 )
 
 :: 4. Copy OpenPredator plugin
-copy /y "%BIN_PLUGIN%\OpenPredatorPlugin.dll" "%PLUGINS_DIR%\" >nul
+if exist "%BIN_PLUGIN%\win-x86\OpenPredatorPlugin.dll" (
+    copy /y "%BIN_PLUGIN%\win-x86\OpenPredatorPlugin.dll" "%PLUGINS_DIR%\" >nul
+) else (
+    copy /y "%BIN_PLUGIN%\OpenPredatorPlugin.dll" "%PLUGINS_DIR%\" >nul
+)
 
 :: 5. Create ZIP archive
 echo [*] Creating Release ZIP archive...

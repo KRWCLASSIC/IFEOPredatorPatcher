@@ -123,9 +123,9 @@ namespace IFEOPredatorPatcher
                 if (File.Exists(cleanPath) && cleanPath.EndsWith(".exe", StringComparison.OrdinalIgnoreCase))
                 {
                     string fileName = Path.GetFileName(cleanPath);
-                    // Match sense apps or any target executable
-                    return fileName.Equals("NitroSense.exe", StringComparison.OrdinalIgnoreCase) ||
-                           fileName.Equals("PredatorSense.exe", StringComparison.OrdinalIgnoreCase);
+                    return fileName.IndexOf("Sense", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                           fileName.IndexOf("Nitro", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                           fileName.IndexOf("Predator", StringComparison.OrdinalIgnoreCase) >= 0;
                 }
             }
             catch

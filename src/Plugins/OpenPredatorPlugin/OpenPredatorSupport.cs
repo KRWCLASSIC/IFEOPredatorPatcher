@@ -170,14 +170,14 @@ namespace OpenPredatorPlugin
             {
                 ShowNotification(
                     "OpenPredator Active",
-                    "NitroSense connected to OpenPredator backend service pipe!"
+                    "Sense application connected to OpenPredator backend service pipe!"
                 );
             }
             else if (isPSSvc)
             {
                 ShowNotification(
                     "Stock PSSvc Active",
-                    "NitroSense connected to stock Acer PSSvc backend service."
+                    "Sense application connected to stock Acer PSSvc backend service."
                 );
             }
         }

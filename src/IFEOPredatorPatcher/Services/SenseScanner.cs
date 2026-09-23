@@ -19,7 +19,7 @@ namespace IFEOPredatorPatcher.Services
             get
             {
                 if (string.IsNullOrWhiteSpace(PackageFullName)) return null;
-                string[] parts = PackageFullName.Split('_');
+                string[] parts = PackageFullName!.Split('_');
                 if (parts.Length >= 5)
                 {
                     string pfn = $"{parts[0]}_{parts[parts.Length - 1]}";
@@ -55,32 +55,28 @@ namespace IFEOPredatorPatcher.Services
                             win32Dir = dir;
                         }
 
-                        // Check for NitroSense.exe
-                        string nitroExe = Path.Combine(win32Dir, "NitroSense.exe");
-                        if (File.Exists(nitroExe) && seenPaths.Add(nitroExe))
+                        // Dynamically scan any Sense executable in package
+                        foreach (var exe in Directory.GetFiles(win32Dir, "*.exe", SearchOption.TopDirectoryOnly))
                         {
-                            results.Add(new SenseAppInfo
+                            string fn = Path.GetFileName(exe);
+                            if ((fn.IndexOf("Sense", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                                 fn.IndexOf("Nitro", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                                 fn.IndexOf("Predator", StringComparison.OrdinalIgnoreCase) >= 0) &&
+                                !fn.Equals("CentenialConvert.exe", StringComparison.OrdinalIgnoreCase) &&
+                                !fn.Equals("DeployTool.exe", StringComparison.OrdinalIgnoreCase) &&
+                                !fn.Equals("UpgradeTool.exe", StringComparison.OrdinalIgnoreCase) &&
+                                !fn.Equals("ListCheck.exe", StringComparison.OrdinalIgnoreCase) &&
+                                seenPaths.Add(exe))
                             {
-                                Name = "NitroSense",
-                                ExecutablePath = nitroExe,
-                                InstallType = "UWP (WindowsApps)",
-                                PackageFullName = dirName,
-                                AppId = "App"
-                            });
-                        }
-
-                        // Check for PredatorSense.exe
-                        string predatorExe = Path.Combine(win32Dir, "PredatorSense.exe");
-                        if (File.Exists(predatorExe) && seenPaths.Add(predatorExe))
-                        {
-                            results.Add(new SenseAppInfo
-                            {
-                                Name = "PredatorSense",
-                                ExecutablePath = predatorExe,
-                                InstallType = "UWP (WindowsApps)",
-                                PackageFullName = dirName,
-                                AppId = "App"
-                            });
+                                results.Add(new SenseAppInfo
+                                {
+                                    Name = Path.GetFileNameWithoutExtension(exe),
+                                    ExecutablePath = exe,
+                                    InstallType = "UWP (WindowsApps)",
+                                    PackageFullName = dirName,
+                                    AppId = "App"
+                                });
+                            }
                         }
                     }
                 }
@@ -107,20 +103,16 @@ namespace IFEOPredatorPatcher.Services
                     foreach (var exe in Directory.GetFiles(b, "*.exe", SearchOption.AllDirectories))
                     {
                         string fn = Path.GetFileName(exe);
-                        if (fn.Equals("NitroSense.exe", StringComparison.OrdinalIgnoreCase) && seenPaths.Add(exe))
+                        if ((fn.IndexOf("Sense", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                             fn.IndexOf("Nitro", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                             fn.IndexOf("Predator", StringComparison.OrdinalIgnoreCase) >= 0) &&
+                            !fn.Equals("DeployTool.exe", StringComparison.OrdinalIgnoreCase) &&
+                            !fn.Equals("UpgradeTool.exe", StringComparison.OrdinalIgnoreCase) &&
+                            seenPaths.Add(exe))
                         {
                             results.Add(new SenseAppInfo
                             {
-                                Name = "NitroSense",
-                                ExecutablePath = exe,
-                                InstallType = "Desktop"
-                            });
-                        }
-                        else if (fn.Equals("PredatorSense.exe", StringComparison.OrdinalIgnoreCase) && seenPaths.Add(exe))
-                        {
-                            results.Add(new SenseAppInfo
-                            {
-                                Name = "PredatorSense",
+                                Name = Path.GetFileNameWithoutExtension(exe),
                                 ExecutablePath = exe,
                                 InstallType = "Desktop"
                             });
