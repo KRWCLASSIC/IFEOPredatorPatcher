@@ -1,0 +1,51 @@
+<Window x:Class="IFEOPredatorPatcher.UI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="IFEOPredatorPatcher" 
+        Width="480" SizeToContent="Height"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        ShowInTaskbar="True">
+
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Target App Selection -->
+        <Grid Grid.Row="0" Margin="0,0,0,12">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="Target Application:" FontWeight="Bold" Margin="0,0,0,4"/>
+                <ComboBox x:Name="TargetAppComboBox" Height="24" SelectionChanged="TargetAppComboBox_SelectionChanged"/>
+                <TextBlock x:Name="SelectedPathText" Text="" FontSize="10" Foreground="Gray" TextTrimming="CharacterEllipsis" Margin="0,2,0,0"/>
+            </StackPanel>
+            <Button Grid.Column="1" Content="Rescan" Width="65" Height="24" Margin="8,18,0,0" Click="RescanButton_Click"/>
+        </Grid>
+
+        <!-- Hook Status -->
+        <GroupBox Grid.Row="1" Header="IFEO Status" Padding="8" Margin="0,0,0,14">
+            <StackPanel>
+                <TextBlock x:Name="StatusText" Text="Status: Checking..." FontWeight="SemiBold"/>
+                <TextBlock x:Name="StatusDetailText" Text="" FontSize="11" Foreground="Gray" Margin="0,2,0,0"/>
+            </StackPanel>
+        </GroupBox>
+
+        <!-- Actions -->
+        <UniformGrid Grid.Row="2" Columns="4" Margin="0,0,0,6">
+            <Button x:Name="InstallButton" Content="Install" Height="26" Margin="0,0,4,0" Click="InstallButton_Click"/>
+            <Button x:Name="UninstallButton" Content="Uninstall" Height="26" Margin="2,0,2,0" Click="UninstallButton_Click"/>
+            <Button Content="Plugins..." Height="26" Margin="2,0,2,0" Click="OpenPluginsFolder_Click"/>
+            <Button Content="Test Run" Height="26" Margin="4,0,0,0" Click="TestLaunch_Click"/>
+        </UniformGrid>
+
+        <!-- Footer -->
+        <TextBlock x:Name="ElevationStatusText" Grid.Row="3" Text="" FontSize="10" Foreground="Gray" Margin="0,4,0,0" HorizontalAlignment="Right"/>
+    </Grid>
+</Window>

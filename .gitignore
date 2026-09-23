@@ -1,0 +1,24 @@
+## Visual Studio & Build Outputs
+[Bb]in/
+[Oo]bj/
+dist/
+[Tt]emp/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vs/
+.vscode/
+.idea/
+
+## Build & Diagnostic Logs
+*.log
+*.tmp
+*.manifest.res
+
+## NuGet & Dependencies
+*.nupkg
+packages/
+
+## Research & Decompiled OEM References
+decompiled/

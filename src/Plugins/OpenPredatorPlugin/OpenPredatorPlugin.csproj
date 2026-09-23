@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <UseWPF>true</UseWPF>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <AssemblyName>OpenPredatorPlugin</AssemblyName>
+    <RootNamespace>OpenPredatorPlugin</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Mono.Cecil" Version="0.11.5" />
+    <ProjectReference Include="..\..\IFEOPredatorPatcher\IFEOPredatorPatcher.csproj" />
+  </ItemGroup>
+
+</Project>
